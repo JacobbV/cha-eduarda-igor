@@ -20,7 +20,7 @@ Lista de presentes do chá de panela da Eduarda e do Igor, publicada em
   quando o convidado escolhe. Sem ele, a lista funciona no modo simples descrito acima.
 
 ## Créditos
-- Ilustrações dos itens: originais, feitas para esta página.
+- Ilustrações dos itens, ícone do bule e imagem do card (`og-image.jpg`): originais, feitas para esta página.
 - Fontes: Great Vibes, Cormorant Garamond e Jost, via Google Fonts (SIL Open Font License 1.1).
 - Reserva automática (opcional): Google Firebase / Cloud Firestore (SDK Web, Apache License 2.0).
 
