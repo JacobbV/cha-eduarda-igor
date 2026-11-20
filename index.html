@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lista de Presentes · Eduarda &amp; Igor</title>
+<meta name="description" content="Lista de presentes do Chá de Panela da Eduarda e do Igor">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: carinhoso e caseiro, como um caderninho de receitas da casa nova.
+   IDEA: a vitrine da "nossa casinha": cada presente é um cartãozinho de papel com seu desenho.
+   PICTURE: os próprios cartões ilustrados (traço fino, um desenho por item) formam a página.
+   COLOUR and TYPE: kraft/areia, verde-oliva e terracota, ponte entre o convite rústico e o minimalista. Great Vibes nos nomes, Cormorant nos títulos, Jost no texto.
+   LAYOUT: cabeçalho com nomes e progresso, filtros, grade de cartões (2 colunas no celular), Pix e créditos no fim. */
+:root{color-scheme:light;
+  --bg:#f5efe4;--paper:#fffdf8;--ink:#3b3a2c;--soft:#6f6a58;--olive:#5f6b45;--olive2:#e7e9da;
+  --terra:#b5653f;--kraft:#d9c4a2;--line:#e3d7c3}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Jost",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 max(4vw,14px)}
+
+header{text-align:center;padding:40px 0 22px;background:
+  radial-gradient(120% 80% at 50% 0%,#fbf6ec 0%,var(--bg) 70%)}
+.kick{font:500 12px "Jost";letter-spacing:.3em;text-transform:uppercase;color:var(--olive);margin:0}
+h1{font:400 clamp(46px,12vw,72px)/1 "Great Vibes",cursive;color:var(--terra);margin:.15em 0 .05em}
+h1 span{color:var(--olive);font-size:.75em;padding:0 .1em}
+.sub{font:italic 500 19px/1.4 "Cormorant Garamond",serif;color:var(--soft);margin:6px auto 0;max-width:34ch}
+.sprig{display:block;margin:14px auto 0;width:120px;height:22px;color:var(--olive)}
+
+.prog{max-width:420px;margin:22px auto 0;text-align:left}
+.prog .bar{height:10px;border-radius:99px;background:var(--olive2);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--olive);border-radius:99px;width:0;transition:width .8s ease}
+.prog p{margin:6px 0 0;font-size:14px;color:var(--soft);display:flex;justify-content:space-between;gap:8px}
+
+.tools{position:sticky;top:0;z-index:5;background:rgba(245,239,228,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none}
+.chip{flex:none;font:500 14px "Jost";border:1px solid var(--kraft);background:var(--paper);color:var(--ink);border-radius:99px;padding:10px 16px;min-height:44px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--olive);border-color:var(--olive);color:#fff}
+.chip:focus-visible,.btn:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+
+main{padding:22px 0 10px}
+h2{font:600 28px/1.1 "Cormorant Garamond",serif;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:14px}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+
+.card{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:0 1px 0 rgba(60,50,30,.04),0 8px 18px -14px rgba(60,50,30,.35)}
+.ill{width:100%;aspect-ratio:1.25;border-radius:10px;background:linear-gradient(180deg,#f8f2e6,#f1e8d7);display:grid;place-items:center;margin-bottom:10px}
+.ill svg{width:58%;height:auto;color:var(--olive);overflow:visible}
+.ill svg *{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ill svg .f{fill:#e9c9b5;stroke:none}
+.name{font:500 16px/1.25 "Jost";margin:0 0 10px;min-height:2.5em;display:flex;align-items:center}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:44px;border-radius:99px;font:500 14px "Jost";text-decoration:none;cursor:pointer;border:1px solid var(--terra);background:var(--terra);color:#fff;margin-top:auto}
+.btn.ghost{background:transparent;color:var(--olive);border-color:var(--olive)}
+.done .ill{filter:grayscale(.7);opacity:.55}
+.done .name{color:var(--soft)}
+.tag{margin-top:auto;font:500 13px "Jost";color:var(--olive);background:var(--olive2);border-radius:99px;padding:10px 12px;width:100%}
+
+.how{background:var(--paper);border:1px dashed var(--kraft);border-radius:14px;padding:16px 18px;margin:8px 0 0;font-size:15px;color:var(--soft)}
+.how b{color:var(--ink);font-weight:500}
+
+.pix{margin:30px 0 0;background:var(--olive);color:#fff;border-radius:16px;padding:22px;display:grid;gap:10px;text-align:center}
+.pix[hidden]{display:none}
+.pix h3{font:400 38px/1 "Great Vibes",cursive;margin:0}
+.pix p{margin:0;opacity:.9}
+.pix code{font:500 16px "Jost";background:rgba(255,255,255,.14);padding:8px 12px;border-radius:8px;overflow-wrap:anywhere}
+.pix .btn{background:#fff;color:var(--olive);border-color:#fff;max-width:280px;margin:4px auto 0}
+#pixmsg{min-height:20px;font-size:14px}
+
+footer{text-align:center;padding:34px 0 40px;color:var(--soft);font-size:13px}
+footer .qyu{display:inline-block;margin-top:10px;text-decoration:none;font-size:13px;color:var(--soft)}
+footer .qyu b{font:700 14px "Jost";letter-spacing:.06em;color:#00bcd4}
+footer small{display:block;margin-top:8px;opacity:.8}
+.empty{color:var(--soft);font-style:italic}
+.tag.res{background:#f6e3d8;color:var(--terra)}
+dialog{border:0;border-radius:18px;padding:0;width:min(92vw,400px);background:var(--paper);color:var(--ink);box-shadow:0 30px 60px -20px rgba(40,30,15,.5)}
+dialog::backdrop{background:rgba(40,34,22,.45)}
+dialog form{padding:22px;display:grid;gap:10px}
+dialog h3{font:600 26px/1.15 "Cormorant Garamond",serif;margin:0}
+.dk{margin:0;font:500 12px "Jost";letter-spacing:.24em;text-transform:uppercase;color:var(--olive)}
+dialog label{font-size:14px;color:var(--soft)}
+dialog input{font:16px "Jost";padding:12px 14px;border:1px solid var(--kraft);border-radius:12px;background:#fff;min-height:46px}
+dialog input:focus-visible{outline:2px solid var(--olive);outline-offset:1px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.err{color:#a3391f;font-size:14px;margin:0;min-height:1em}
+.donetxt{margin:0;color:var(--soft)}
+.btn[disabled]{opacity:.6;cursor:wait}
+button.btn{font-family:"Jost",sans-serif}
+@media(prefers-reduced-motion:reduce){.prog .bar i{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="kick">Chá de Panela</p>
+    <h1>Eduarda <span>&amp;</span> Igor</h1>
+    <p class="sub">Lista de presentes para a nossa casinha</p>
+    <svg class="sprig" viewBox="0 0 120 22" aria-hidden="true"><path d="M4 11h112" stroke="currentColor" stroke-width="1.2" fill="none"/><g fill="currentColor"><ellipse cx="40" cy="7" rx="6" ry="2.6" transform="rotate(-20 40 7)"/><ellipse cx="52" cy="15" rx="6" ry="2.6" transform="rotate(20 52 15)"/><ellipse cx="68" cy="7" rx="6" ry="2.6" transform="rotate(20 68 7)"/><ellipse cx="80" cy="15" rx="6" ry="2.6" transform="rotate(-20 80 15)"/></g><circle cx="60" cy="11" r="3" fill="#b5653f"/></svg>
+    <div class="prog" aria-live="polite">
+      <div class="bar"><i id="bar"></i></div>
+      <p><span id="progTxt"></span><span id="leftTxt"></span></p>
+    </div>
+  </div>
+</header>
+
+<div class="tools">
+  <div class="wrap chips" role="group" aria-label="Filtrar presentes" id="chips"></div>
+</div>
+
+<main class="wrap">
+  <div class="how" id="how"><b>Como funciona:</b> escolha um presente e toque em <b>“Quero presentear”</b>. Ele fica reservado no seu nome na hora, para ninguém repetir, e você avisa a Duda pelo WhatsApp com a mensagem pronta. 💛</div>
+  <div id="list"></div>
+
+  <section class="pix" id="pixBox" hidden>
+    <h3>Prefere Pix?</h3>
+    <p>Se ficar mais fácil, qualquer valor ajuda a montar a casinha.</p>
+    <code id="pixKey"></code>
+    <button class="btn" id="pixBtn" type="button">Copiar chave Pix</button>
+    <p id="pixmsg" aria-live="polite"></p>
+  </section>
+</main>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <form id="dlgForm" method="dialog">
+    <div id="stepAsk">
+      <p class="dk">Quero presentear</p>
+      <h3 id="dlgTitle"></h3>
+      <label for="nome">Seu nome, para a Duda saber quem foi</label>
+      <input id="nome" name="nome" maxlength="60" autocomplete="name" required placeholder="Ex.: Ana Paula">
+      <p class="err" id="dlgErr" aria-live="polite"></p>
+      <div class="row">
+        <button class="btn ghost" type="button" id="dlgCancel">Cancelar</button>
+        <button class="btn" type="submit" id="dlgOk">Reservar</button>
+      </div>
+    </div>
+    <div id="stepDone" hidden>
+      <p class="dk">Prontinho! 💛</p>
+      <h3 id="doneTitle"></h3>
+      <p class="donetxt">O presente ficou reservado no seu nome. Agora é só avisar a Duda:</p>
+      <a class="btn" id="doneWa" target="_blank" rel="noopener">Avisar a Duda no WhatsApp</a>
+      <button class="btn ghost" type="button" id="dlgClose" style="margin-top:8px">Fechar</button>
+    </div>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    Com carinho, Eduarda &amp; Igor
+    <br>
+    <a class="qyu" href="https://jacobbv.github.io" target="_blank" rel="noopener">Desenvolvido por <b>QYUDEV.</b></a>
+    <small>Ilustrações originais da página · Fontes Great Vibes, Cormorant Garamond e Jost (Google Fonts, SIL Open Font License) · Reservas com Google Firebase (Cloud Firestore)</small>
+  </div>
+</footer>
+
+<script>
+{
+  /* ====== EDITE AQUI ====== */
+  // WhatsApp da noiva com DDI+DDD, só números. Vazio = o convidado escolhe o contato.
+  const WHATSAPP_NOIVA = '558399077236';
+  // Chave Pix (deixe vazio para esconder a seção)
+  const CHAVE_PIX = '';
+  // Configuração do Firebase (Console do Firebase > Configurações do projeto > Seus apps > Web).
+  // Deixe null para a lista funcionar sem reserva automática (a Duda marca manualmente com "ganhou: true").
+  const FIREBASE_CONFIG = null;
+  // ganhou: true = já tem / já foi escolhido
+  const ITENS = [
+    {cat:'Cozinha', nome:'Jogo de panelas', ic:'panelas', ganhou:true},
+    {cat:'Cozinha', nome:'Panela de pressão', ic:'pressao'},
+    {cat:'Cozinha', nome:'Jogo de pratos', ic:'pratos'},
+    {cat:'Cozinha', nome:'Jogo de copos', ic:'copos'},
+    {cat:'Cozinha', nome:'Jogo de xícaras', ic:'xicaras'},
+    {cat:'Cozinha', nome:'Jogo de talheres', ic:'talheres'},
+    {cat:'Cozinha', nome:'Conjunto de potes', ic:'potes'},
+    {cat:'Cozinha', nome:'Travessas', ic:'travessas'},
+    {cat:'Cozinha', nome:'Assadeiras', ic:'assadeiras'},
+    {cat:'Cozinha', nome:'Liquidificador', ic:'liquidificador', ganhou:true},
+    {cat:'Cozinha', nome:'Sanduicheira', ic:'sanduicheira', ganhou:true},
+    {cat:'Cozinha', nome:'Air fryer', ic:'airfryer', ganhou:true},
+    {cat:'Cozinha', nome:'Kit de facas', ic:'facas'},
+    {cat:'Cozinha', nome:'Fogão', ic:'fogao', ganhou:true},
+    {cat:'Cozinha', nome:'Mesa', ic:'mesa'},
+    {cat:'Cozinha', nome:'Armário', ic:'armario', ganhou:true},
+    {cat:'Cozinha', nome:'Geladeira', ic:'geladeira', ganhou:true},
+    {cat:'Cozinha', nome:'Batedeira', ic:'batedeira'},
+    {cat:'Cozinha', nome:'Cuscuzeira', ic:'cuscuzeira'},
+    {cat:'Cozinha', nome:'Frigideira', ic:'frigideira'},
+    {cat:'Cozinha', nome:'Micro-ondas', ic:'microondas'},
+    {cat:'Cozinha', nome:'Garrafa térmica', ic:'garrafa'},
+    {cat:'Cozinha', nome:'Jarra', ic:'jarra'},
+    {cat:'Cozinha', nome:'Escorredor de louça', ic:'escorredor'},
+    {cat:'Cozinha', nome:'Tábua de corte', ic:'tabua'},
+    {cat:'Cozinha', nome:'Kit de utensílios (concha, espátula…)', ic:'utensilios'},
+    {cat:'Cozinha', nome:'Panos de prato', ic:'panos'},
+    {cat:'Sala', nome:'Almofadas', ic:'almofadas'},
+    {cat:'Sala', nome:'Cortina', ic:'cortina'},
+    {cat:'Sala', nome:'Tapete', ic:'tapete'},
+    {cat:'Sala', nome:'Mesa de centro', ic:'mesacentro'},
+    {cat:'Sala', nome:'Ventilador', ic:'ventilador'},
+    {cat:'Sala', nome:'Luminária', ic:'luminaria'},
+    {cat:'Quarto', nome:'Jogo de cama de casal', ic:'cama'},
+    {cat:'Quarto', nome:'Edredom', ic:'edredom'},
+    {cat:'Quarto', nome:'Cobertor', ic:'cobertor'},
+    {cat:'Quarto', nome:'Colcha', ic:'colcha'},
+    {cat:'Quarto', nome:'Travesseiros', ic:'travesseiros'},
+    {cat:'Quarto', nome:'Protetor de colchão', ic:'protetor'},
+    {cat:'Banheiro', nome:'Jogo de toalhas', ic:'toalhas'},
+    {cat:'Banheiro', nome:'Tapete de banheiro', ic:'tapetebanho'},
+    {cat:'Banheiro', nome:'Kit de banheiro (saboneteira e porta-escova)', ic:'kitbanheiro'},
+    {cat:'Banheiro', nome:'Lixeira', ic:'lixeira'},
+    {cat:'Lavanderia', nome:'Ferro de passar', ic:'ferro'},
+    {cat:'Lavanderia', nome:'Tábua de passar', ic:'tabuapassar'},
+    {cat:'Lavanderia', nome:'Varal', ic:'varal'},
+    {cat:'Lavanderia', nome:'Cesto de roupa', ic:'cestoroupa'},
+    {cat:'Lavanderia', nome:'Kit limpeza (balde, vassoura e rodo)', ic:'kitlimpeza'},
+  ];
+  /* ======================== */
+
+  const IC = {
+    panelas:'<path class="f" d="M14 32h36v12a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8z"/><path d="M12 30h40v16a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8z"/><path d="M5 33h7M52 33h7"/><path d="M10 30c0-6 10-9 22-9s22 3 22 9"/><path d="M28 21v-4h8v4"/>',
+    pressao:'<path class="f" d="M16 32h28v12a8 8 0 0 1-8 8H24a8 8 0 0 1-8-8z"/><path d="M14 30h32v16a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8z"/><path d="M11 30h38"/><path d="M46 27h14"/><path d="M28 30v-6h4v6"/><path d="M30 24v-5"/><circle cx="30" cy="16" r="2.5"/>',
+    pratos:'<circle class="f" cx="32" cy="32" r="12"/><circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="13"/><path d="M8 50c6 5 14 8 24 8s18-3 24-8"/>',
+    copos:'<path class="f" d="M15 32h12l-1 20h-10z"/><path d="M13 14h16l-2 40H15z"/><path d="M35 22h16l-2 32H37z"/><path d="M14 30h14M36 34h14"/>',
+    xicaras:'<path class="f" d="M17 30h24v6a12 12 0 0 1-24 0z"/><path d="M15 26h28v10a14 14 0 0 1-28 0z"/><path d="M43 30h4a5 5 0 0 1 0 10h-5"/><path d="M8 54h42"/><path d="M24 20c-2-3 2-5 0-8M34 20c-2-3 2-5 0-8"/>',
+    talheres:'<path d="M14 10v12a5 5 0 0 0 10 0V10M19 10v12M19 27v27"/><path d="M33 54V10c7 5 7 17 0 22"/><ellipse class="f" cx="47" cy="17" rx="4" ry="6"/><ellipse cx="47" cy="17" rx="6" ry="8"/><path d="M47 25v29"/>',
+    potes:'<rect class="f" x="12" y="36" width="18" height="12" rx="2"/><rect x="10" y="30" width="22" height="22" rx="3"/><path d="M8 25h26v5H8z"/><rect x="36" y="20" width="20" height="32" rx="3"/><path d="M34 15h24v5H34z"/>',
+    travessas:'<ellipse class="f" cx="32" cy="34" rx="16" ry="5"/><ellipse cx="32" cy="34" rx="24" ry="11"/><ellipse cx="32" cy="33" rx="17" ry="6"/><path d="M6 32H2M58 32h4"/>',
+    assadeiras:'<path class="f" d="M14 32h36l-3 12H17z"/><path d="M10 28h44l-4 20H14z"/><path d="M4 28h56"/><path d="M14 18h36l-2 6"/>',
+    liquidificador:'<path class="f" d="M24 22h16l-2 16H26z"/><path d="M20 10h24l-4 30H24z"/><path d="M44 16h5v14h-6"/><path d="M18 8h28"/><rect x="18" y="40" width="28" height="15" rx="3"/><circle cx="32" cy="47.5" r="2.5"/>',
+    sanduicheira:'<rect class="f" x="12" y="36" width="36" height="8" rx="4"/><rect x="10" y="22" width="40" height="24" rx="11"/><path d="M10 34h40"/><path d="M50 29h9v10h-9"/><circle cx="20" cy="28" r="1.5"/>',
+    airfryer:'<rect class="f" x="20" y="32" width="24" height="14" rx="2"/><path d="M18 10h28a6 6 0 0 1 6 6v34a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6V16a6 6 0 0 1 6-6z"/><rect x="17" y="28" width="30" height="21" rx="3"/><path d="M27 39h10"/><circle cx="32" cy="19" r="3.5"/>',
+    facas:'<path class="f" d="M20 34h24l-3 18H23z"/><path d="M17 30h30l-4 24H21z"/><path d="M25 30l-5-18M32 30V10M39 30l5-18"/><path d="M22 12l-3-1M32 10V7M44 12l3-1"/>',
+    fogao:'<rect class="f" x="18" y="32" width="28" height="16" rx="2"/><rect x="12" y="12" width="40" height="44" rx="3"/><path d="M12 22h40"/><circle cx="19" cy="17" r="1.6"/><circle cx="26" cy="17" r="1.6"/><circle cx="38" cy="17" r="1.6"/><circle cx="45" cy="17" r="1.6"/><rect x="17" y="28" width="30" height="22" rx="2"/><path d="M24 32h16"/>',
+    mesa:'<path class="f" d="M12 20h40l4 6H8z"/><path d="M8 26l4-6h40l4 6z"/><path d="M8 26h48"/><path d="M13 26v28M51 26v28M20 26v18M44 26v18"/>',
+    armario:'<rect class="f" x="14" y="12" width="18" height="40"/><rect x="12" y="10" width="40" height="44" rx="2"/><path d="M32 10v44"/><path d="M28 28v8M36 28v8"/><path d="M14 54v4M50 54v4"/>',
+    geladeira:'<rect class="f" x="18" y="8" width="28" height="15" rx="3"/><rect x="16" y="6" width="32" height="52" rx="4"/><path d="M16 24h32"/><path d="M22 13v5M22 30v10"/><path d="M20 58v2M44 58v2"/>',
+    batedeira:'<path class="f" d="M30 36h18l-2 11H32z"/><path d="M12 55h38"/><path d="M17 55V22a9 9 0 0 1 9-9h18a7 7 0 0 1 7 7v4H26"/><path d="M28 34h22l-3 15H31z"/><path d="M39 24v10"/>',
+    cuscuzeira:'<path class="f" d="M20 36h24v13a3 3 0 0 1-3 3H23a3 3 0 0 1-3-3z"/><path d="M18 22h28v28a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4z"/><path d="M15 22c0-5 8-8 17-8s17 3 17 8"/><path d="M29 14v-3h6v3"/><path d="M18 34h28"/><path d="M13 39h5M46 39h5"/><path d="M26 28h.1M32 28h.1M38 28h.1"/>',
+    frigideira:'<circle class="f" cx="24" cy="36" r="11"/><circle cx="24" cy="36" r="17"/><circle cx="24" cy="36" r="12"/><path d="M39 27l20-12"/>',
+    cama:'<path class="f" d="M26 30h28v6H26z"/><path d="M8 48V18M8 36h48v12M56 48V36"/><rect x="12" y="27" width="12" height="9" rx="3.5"/><path d="M26 36v-7h30v7"/><path d="M8 48v4M56 48v4"/>',
+    edredom:'<rect class="f" x="12" y="36" width="40" height="10" rx="5"/><rect x="10" y="18" width="44" height="15" rx="7.5"/><rect x="10" y="33" width="44" height="15" rx="7.5"/><path d="M22 18v15M32 18v15M42 18v15M22 33v15M32 33v15M42 33v15"/>',
+    cobertor:'<path class="f" d="M10 31h44v6H10z"/><path d="M10 20h44v28H10z"/><path d="M10 26h44M10 42h44"/><path d="M14 48v5M20 48v5M26 48v5M32 48v5M38 48v5M44 48v5M50 48v5"/>',
+    colcha:'<path class="f" d="M32 18l9 14-9 14-9-14z"/><rect x="10" y="12" width="44" height="40" rx="3"/><path d="M32 12l11 20-11 20-11-20z"/><path d="M10 32h11M43 32h11"/>',
+    travesseiros:'<path class="f" d="M32 32c7-3 16-3 22 0v10c-6 3-15 3-22 0z"/><path d="M8 22c8-4 20-4 26 0v14c-6 4-18 4-26 0z"/><path d="M30 30c8-4 18-4 26 0v14c-8 4-18 4-26 0z"/>',
+    microondas:'<rect class="f" x="13" y="21" width="28" height="22" rx="2"/><rect x="8" y="16" width="48" height="32" rx="3"/><rect x="12" y="20" width="30" height="24" rx="2"/><path d="M46 22h6M46 28h6M46 34h6"/><circle cx="49" cy="41" r="2"/><path d="M12 48v4M52 48v4"/>',
+    garrafa:'<path class="f" d="M24 30h16v20H24z"/><path d="M24 8h16v6H24z"/><path d="M22 14h20v38a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4z"/><path d="M42 22h5v14h-5"/><path d="M22 24h20"/>',
+    jarra:'<path class="f" d="M21 32h21l-1 18H22z"/><path d="M18 14h26l-2 40H20z"/><path d="M18 14l-6 5"/><path d="M44 20h4a5 5 0 0 1 0 10h-5"/>',
+    escorredor:'<circle class="f" cx="22" cy="24" r="9"/><circle cx="22" cy="24" r="11"/><circle cx="38" cy="22" r="12"/><path d="M8 34h48l-4 16H12z"/><path d="M18 34v16M28 34v16M38 34v16M48 34v16"/><path d="M14 54h36"/>',
+    tabua:'<rect class="f" x="14" y="22" width="32" height="24" rx="5"/><rect x="10" y="18" width="40" height="32" rx="7"/><path d="M50 29h5a4 4 0 0 1 0 8h-5"/><path d="M18 26l22 16"/>',
+    utensilios:'<path class="f" d="M12 40a9 9 0 0 0 18 0z"/><path d="M21 8v32"/><path d="M11 40a10 10 0 0 0 20 0z"/><path d="M44 8v28"/><rect x="36" y="36" width="16" height="18" rx="2"/><path d="M41 40v10M47 40v10"/>',
+    panos:'<path class="f" d="M20 16h24v28H20z"/><path d="M8 12h48"/><path d="M18 12h28v42a2 2 0 0 1-2 2H20a2 2 0 0 1-2-2z"/><path d="M18 44h28M18 49h28"/>',
+    almofadas:'<path class="f" d="M30 26c8-2 16-2 24 0 2 8 2 16 0 24-8 2-16 2-24 0-2-8-2-16 0-24z"/><path d="M10 16c8-2 16-2 24 0 2 8 2 16 0 24-8 2-16 2-24 0-2-8-2-16 0-24z"/><path d="M30 26c8-2 16-2 24 0 2 8 2 16 0 24-8 2-16 2-24 0-2-8-2-16 0-24z"/>',
+    cortina:'<path class="f" d="M12 10c2 14 2 30 5 44h6c-3-14-3-30-1-44z"/><path d="M6 10h52"/><path d="M10 10c2 14 2 30 6 44h8c-4-14-4-30-2-44M54 10c-2 14-2 30-6 44h-8c4-14 4-30 2-44"/><path d="M24 32h-6M40 32h6"/>',
+    tapete:'<rect class="f" x="16" y="24" width="32" height="16" rx="2"/><rect x="10" y="18" width="44" height="28" rx="2"/><path d="M10 22H5M10 28H5M10 34H5M10 40H5M54 22h5M54 28h5M54 34h5M54 40h5"/><rect x="16" y="24" width="32" height="16" rx="2"/>',
+    mesacentro:'<ellipse class="f" cx="32" cy="29" rx="18" ry="4"/><ellipse cx="32" cy="30" rx="24" ry="7"/><path d="M14 35v16M50 35v16M24 37v11M40 37v11"/>',
+    ventilador:'<path class="f" d="M32 23c-2-6 0-12 4-12 3 0 3 6-4 12zM35 28c6 1 10 6 8 9-2 2-6-1-8-9zM29 28c-4 5-10 6-11 3-1-3 4-5 11-3z"/><circle cx="32" cy="26" r="18"/><circle cx="32" cy="26" r="3"/><path d="M32 44v8M22 56h20"/>',
+    luminaria:'<path class="f" d="M22 10h20l5 14H17z"/><path d="M20 8h24l6 18H14z"/><path d="M32 26v26M22 56h20"/>',
+    toalhas:'<rect class="f" x="12" y="38" width="40" height="11" rx="3"/><rect x="10" y="36" width="44" height="14" rx="3"/><rect x="14" y="24" width="36" height="12" rx="3"/><rect x="18" y="12" width="28" height="12" rx="3"/><path d="M10 44h44M14 30h36M18 18h28"/>',
+    tapetebanho:'<rect class="f" x="12" y="26" width="40" height="20" rx="9"/><rect x="8" y="22" width="48" height="28" rx="12"/><path d="M16 36c4-3 8 3 12 0s8 3 12 0 8 3 8 0"/>',
+    kitbanheiro:'<path class="f" d="M12 36h16l-2 16H14z"/><path d="M10 30h20l-2 24H12z"/><path d="M16 30l-2-16M24 30l3-14"/><rect x="36" y="28" width="18" height="26" rx="4"/><path d="M45 28v-8h-7M45 20h4"/>',
+    lixeira:'<path class="f" d="M21 26h22l-2 24H23z"/><path d="M16 20h32"/><path d="M18 20l3 34h22l3-34"/><path d="M28 15h8"/><path d="M26 28v20M32 28v20M38 28v20"/>',
+    ferro:'<path class="f" d="M16 42h36l-1-6H26z"/><path d="M8 46c0-12 10-20 24-20h18c4 0 6 4 6 8v12z"/><path d="M26 26c0-6 4-10 10-10h12"/><path d="M14 52h40"/>',
+    tabuapassar:'<path class="f" d="M10 23h36l7 3-7 3H10z"/><path d="M6 22h42c6 0 10 2 10 4s-4 4-10 4H6z"/><path d="M20 30l18 24M38 30L20 54"/>',
+    varal:'<path class="f" d="M16 14h12v16H16z"/><path d="M6 14h52"/><path d="M10 14v40M54 14v40"/><path d="M16 14h12v16H16z"/><path d="M34 14l-2 6 4 2v16h12V22l4-2-2-6"/>',
+    cestoroupa:'<path class="f" d="M16 30h32l-3 20H19z"/><path d="M10 24h44l-5 30H15z"/><path d="M14 34h36M14 44h34"/><path d="M22 24c0-6 4-10 10-10s10 4 10 10"/>',
+    kitlimpeza:'<path class="f" d="M13 38h20l-2 14H15z"/><path d="M10 32h26l-3 22H13z"/><path d="M12 32c0-8 22-8 22 0"/><path d="M46 6v34"/><path d="M38 40h16l2 14H36z"/><path d="M42 44v8M46 44v8M50 44v8"/>',
+    protetor:'<path class="f" d="M32 9c-3 4-5 6-5 9a5 5 0 0 0 10 0c0-3-2-5-5-9z"/><path d="M32 7c-3.5 4.5-6 7-6 10.5a6 6 0 0 0 12 0C38 14 35.5 11.5 32 7z"/><path d="M6 38l10-10h42l-10 10z"/><path d="M6 38v12h42V38M58 28v12L48 50"/><path d="M12 44h30"/>'
+  };
+
+  const cats = ['Todos', ...new Set(ITENS.map(i => i.cat)), 'Disponíveis'];
+  let filtro = 'Todos';
+  const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  const waLink = (item, quem) => {
+    // sem emoji: alguns WhatsApp (principalmente no computador) trocam o emoji por um losango com interrogação
+    const msg = quem
+      ? `Oi, Duda! Aqui é ${quem}. Vou te dar de presente no Chá de Panela: ${item}.`
+      : `Oi, Duda! Vou te dar de presente no Chá de Panela: ${item}. Pode marcar na lista?`;
+    const base = WHATSAPP_NOIVA ? `https://wa.me/${WHATSAPP_NOIVA}` : 'https://wa.me/';
+    return `${base}?text=${encodeURIComponent(msg)}`;
+  };
+
+  // ----- Reservas (Firebase) -----
+  let reservas = {};
+  let db = null, fs = null;
+  const ocupado = i => i.ganhou || !!reservas[i.ic];
+
+  const card = i => {
+    const r = reservas[i.ic];
+    let acao;
+    if (i.ganhou) acao = '<span class="tag">✓ Já temos</span>';
+    else if (r) acao = `<span class="tag res">🎁 Reservado por ${esc(String(r.nome || 'alguém'))}</span>`;
+    else if (db) acao = `<button class="btn" type="button" data-id="${i.ic}">🎁 Quero presentear</button>`;
+    else acao = `<a class="btn" href="${waLink(i.nome)}" target="_blank" rel="noopener">🎁 Quero presentear</a>`;
+    return `
+    <article class="card${ocupado(i) ? ' done' : ''}">
+      <div class="ill"><svg viewBox="0 0 64 64" aria-hidden="true">${IC[i.ic] || ''}</svg></div>
+      <p class="name">${esc(i.nome)}</p>
+      ${acao}
+    </article>`;
+  };
+
+  const progresso = () => {
+    const total = ITENS.length, ok = ITENS.filter(ocupado).length;
+    document.getElementById('progTxt').textContent = `${ok} de ${total} já garantidos`;
+    document.getElementById('leftTxt').textContent = `faltam ${total - ok}`;
+    document.getElementById('bar').style.width = (ok / total * 100) + '%';
+  };
+
+  const render = () => {
+    const list = document.getElementById('list');
+    let itens = ITENS;
+    if (filtro === 'Disponíveis') itens = ITENS.filter(i => !ocupado(i));
+    else if (filtro !== 'Todos') itens = ITENS.filter(i => i.cat === filtro);
+    const grupos = [...new Set(itens.map(i => i.cat))];
+    list.innerHTML = grupos.length
+      ? grupos.map(g => {
+          const its = itens.filter(i => i.cat === g).sort((a, b) => (ocupado(a) ? 1 : 0) - (ocupado(b) ? 1 : 0));
+          return `<h2>${g}</h2><div class="grid">${its.map(card).join('')}</div>`;
+        }).join('')
+      : '<p class="empty">Tudo já foi escolhido. Obrigado! 💛</p>';
+    progresso();
+  };
+
+  // ----- Janela de reserva -----
+  const dlg = document.getElementById('dlg');
+  const nomeIn = document.getElementById('nome');
+  const err = document.getElementById('dlgErr');
+  const okBtn = document.getElementById('dlgOk');
+  let atual = null;
+  try { nomeIn.value = localStorage.getItem('cha-nome') || ''; } catch (e) {}
+
+  const abrir = id => {
+    atual = ITENS.find(i => i.ic === id); if (!atual) return;
+    document.getElementById('dlgTitle').textContent = atual.nome;
+    document.getElementById('stepAsk').hidden = false;
+    document.getElementById('stepDone').hidden = true;
+    err.textContent = ''; okBtn.disabled = false;
+    dlg.showModal(); nomeIn.focus();
+  };
+  document.getElementById('list').addEventListener('click', e => {
+    const b = e.target.closest('button[data-id]'); if (b) abrir(b.dataset.id);
+  });
+  document.getElementById('dlgCancel').addEventListener('click', () => dlg.close());
+  document.getElementById('dlgClose').addEventListener('click', () => dlg.close());
+
+  document.getElementById('dlgForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const quem = nomeIn.value.trim().slice(0, 60);
+    if (!quem) { err.textContent = 'Escreve seu nome, por favor.'; return; }
+    if (reservas[atual.ic]) { err.textContent = 'Ops! Alguém acabou de escolher esse presente.'; return; }
+    okBtn.disabled = true; err.textContent = '';
+    try {
+      await fs.setDoc(fs.doc(db, 'reservas', atual.ic), { nome: quem, quando: fs.serverTimestamp() });
+      try { localStorage.setItem('cha-nome', quem); } catch (e2) {}
+      document.getElementById('doneTitle').textContent = atual.nome;
+      document.getElementById('doneWa').href = waLink(atual.nome, quem);
+      document.getElementById('stepAsk').hidden = true;
+      document.getElementById('stepDone').hidden = false;
+    } catch (e2) {
+      okBtn.disabled = false;
+      err.textContent = (e2 && e2.code === 'permission-denied')
+        ? 'Ops! Alguém acabou de escolher esse presente.'
+        : 'Não deu certo agora. Verifique a internet e tente de novo.';
+    }
+  });
+
+  const iniciarFirebase = async () => {
+    if (!FIREBASE_CONFIG) {
+      document.getElementById('how').innerHTML = '<b>Como funciona:</b> escolha um presente e toque em <b>“Quero presentear”</b>. Abre o WhatsApp da Duda com a mensagem pronta, e ela marca o item aqui para ninguém repetir. 💛';
+      return;
+    }
+    try {
+      const V = '10.12.2';
+      const appMod = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`);
+      fs = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`);
+      db = fs.getFirestore(appMod.initializeApp(FIREBASE_CONFIG));
+      render();
+      fs.onSnapshot(fs.collection(db, 'reservas'), snap => {
+        reservas = {};
+        snap.forEach(d => { reservas[d.id] = d.data(); });
+        render();
+      }, e2 => console.warn('Firestore:', e2));
+    } catch (e2) {
+      console.warn('Firebase indisponível, usando modo simples.', e2);
+      db = null; render();
+    }
+  };
+
+  const chips = document.getElementById('chips');
+  chips.innerHTML = cats.map(c => `<button class="chip" type="button" aria-pressed="${c === filtro}">${c}</button>`).join('');
+  chips.addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    filtro = b.textContent;
+    chips.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+    render();
+  });
+
+  if (CHAVE_PIX) {
+    document.getElementById('pixBox').hidden = false;
+    document.getElementById('pixKey').textContent = CHAVE_PIX;
+    const pm = document.getElementById('pixmsg');
+    document.getElementById('pixBtn').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(CHAVE_PIX); pm.textContent = 'Chave copiada! Obrigado 💛'; }
+      catch (e) { pm.textContent = 'Copie a chave acima: ' + CHAVE_PIX; }
+    });
+  }
+
+  render();
+  iniciarFirebase();
+}
+</script>
+</body>
+</html>
