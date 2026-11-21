@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Área da noiva · Eduarda &amp; Igor</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f5efe4">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: o caderninho da noiva, para arrumar a lista sem mexer em código.
+   COLOUR and TYPE: as mesmas da lista (areia, verde-oliva, terracota; Great Vibes, Cormorant, Jost). */
+:root{color-scheme:light;
+  --bg:#f5efe4;--paper:#fffdf8;--ink:#3b3a2c;--soft:#6f6a58;--olive:#5f6b45;--olive2:#e7e9da;
+  --terra:#b5653f;--kraft:#d9c4a2;--line:#e3d7c3;--bad:#a3391f}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Jost",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 max(4vw,14px)}
+header{text-align:center;padding:30px 0 14px}
+.kick{font:500 12px "Jost";letter-spacing:.3em;text-transform:uppercase;color:var(--olive);margin:0}
+h1{font:400 clamp(40px,11vw,60px)/1 "Great Vibes",cursive;color:var(--terra);margin:.15em 0 0}
+h1 span{color:var(--olive);font-size:.75em}
+.sub{font:italic 500 18px/1.4 "Cormorant Garamond",serif;color:var(--soft);margin:6px 0 0}
+h2{font:600 26px/1.1 "Cormorant Garamond",serif;margin:26px 0 10px;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}
+.panel p{margin:0 0 10px;color:var(--soft)}
+.panel p:last-child{margin-bottom:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 18px;border-radius:99px;font:500 14px "Jost",sans-serif;text-decoration:none;cursor:pointer;border:1px solid var(--terra);background:var(--terra);color:#fff}
+.btn.ghost{background:transparent;color:var(--olive);border-color:var(--olive)}
+.btn.warn{background:transparent;color:var(--bad);border-color:var(--bad)}
+.btn.sm{min-height:40px;padding:0 14px;font-size:13px}
+.btn[disabled]{opacity:.6;cursor:wait}
+.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:6px 0 0}
+.stats{font-size:14px;color:var(--soft)}
+.stats b{color:var(--ink);font-weight:500}
+
+.item{display:grid;grid-template-columns:54px 1fr;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:0 0 10px}
+.item .ill{width:54px;height:54px;border-radius:10px;background:linear-gradient(180deg,#f8f2e6,#f1e8d7);display:grid;place-items:center}
+.ill svg{width:70%;height:auto;color:var(--olive);overflow:visible}
+.ill svg *{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ill svg .f{fill:#e9c9b5;stroke:none}
+.item .nm{margin:0;font-weight:500;line-height:1.25}
+.st{display:inline-block;margin-top:4px;font-size:12px;border-radius:99px;padding:3px 10px;background:var(--olive2);color:var(--olive)}
+.st.res{background:#f6e3d8;color:var(--terra)}
+.st.livre{background:#fff;border:1px dashed var(--kraft);color:var(--soft)}
+.acts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+
+dialog{border:0;border-radius:18px;padding:0;width:min(92vw,420px);background:var(--paper);color:var(--ink);box-shadow:0 30px 60px -20px rgba(40,30,15,.5)}
+dialog::backdrop{background:rgba(40,34,22,.45)}
+dialog form{padding:22px;display:grid;gap:10px}
+dialog h3{font:600 26px/1.15 "Cormorant Garamond",serif;margin:0}
+dialog label{font-size:14px;color:var(--soft)}
+dialog input,dialog select{font:16px "Jost";padding:12px 14px;border:1px solid var(--kraft);border-radius:12px;background:#fff;min-height:46px;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pick{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center}
+.pick .ill{width:64px;height:64px}
+.err{color:var(--bad);font-size:14px;margin:0;min-height:1.2em}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);max-width:92vw;background:var(--ink);color:#fff;border-radius:12px;padding:12px 16px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.on{opacity:1}
+#toast.bad{background:var(--bad)}
+footer{text-align:center;padding:30px 0 40px;color:var(--soft);font-size:13px}
+footer .qyu{display:inline-block;margin-top:8px;text-decoration:none;color:var(--soft)}
+footer .qyu b{font:700 14px "Jost";letter-spacing:.06em;color:#00bcd4}
+footer small{display:block;margin-top:8px;opacity:.8}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="kick">Área da noiva</p>
+    <h1>Eduarda <span>&amp;</span> Igor</h1>
+    <p class="sub">Arrume a lista de presentes por aqui</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="panel" id="semConfig" hidden>
+    <p><b>O Firebase ainda não foi ligado.</b> Preencha o <code>FIREBASE_CONFIG</code> no arquivo <code>config.js</code> para usar esta área.</p>
+  </section>
+
+  <section class="panel" id="entrar" hidden>
+    <p>Entre com a conta Google autorizada para editar a lista.</p>
+    <button class="btn" id="btnEntrar" type="button">Entrar com Google</button>
+    <p class="err" id="erroLogin" role="alert"></p>
+  </section>
+
+  <section class="panel" id="semAcesso" hidden>
+    <p>O e-mail <b id="emailNegado"></b> não tem permissão para editar a lista.</p>
+    <p>Entre com outra conta Google.</p>
+    <button class="btn ghost" id="btnSair2" type="button">Sair</button>
+  </section>
+
+  <section id="painel" hidden>
+    <div class="bar">
+      <span class="stats" id="stats"></span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn ghost sm" href="./" target="_blank" rel="noopener">Ver a lista</a>
+        <button class="btn ghost sm" id="btnSair" type="button">Sair</button>
+      </span>
+    </div>
+
+    <div class="panel" id="importar" hidden>
+      <p>A lista ainda está no modo padrão (a que veio no site). Para poder editar, importe os itens para o banco uma vez só.</p>
+      <button class="btn" id="btnImportar" type="button">Importar a lista inicial</button>
+    </div>
+
+    <div class="bar" style="margin-top:16px">
+      <button class="btn" id="btnNovo" type="button">＋ Novo presente</button>
+    </div>
+
+    <div id="lista"></div>
+
+    <p class="stats" style="margin-top:14px">
+      <b>Já temos</b>: marca o item como já garantido, sem nome. <b>Liberar</b>: apaga a reserva do convidado e o item volta a ficar disponível.
+    </p>
+  </section>
+</main>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <form id="dlgForm" method="dialog">
+    <h3 id="dlgTitle">Novo presente</h3>
+    <label for="fNome">Nome do presente</label>
+    <input id="fNome" maxlength="60" required placeholder="Ex.: Jogo de panelas">
+    <label for="fCat">Categoria</label>
+    <input id="fCat" maxlength="30" required list="cats" placeholder="Ex.: Cozinha">
+    <datalist id="cats"></datalist>
+    <label for="fIc">Desenho</label>
+    <div class="pick">
+      <div class="ill"><svg viewBox="0 0 64 64" aria-hidden="true" id="prev"></svg></div>
+      <select id="fIc"></select>
+    </div>
+    <p class="err" id="dlgErr" role="alert"></p>
+    <div class="row">
+      <button class="btn ghost" type="button" id="dlgCancel">Cancelar</button>
+      <button class="btn" type="submit" id="dlgOk">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<footer>
+  <div class="wrap">
+    Com carinho, Eduarda &amp; Igor
+    <br>
+    <a class="qyu" href="https://jacobbv.github.io" target="_blank" rel="noopener">Desenvolvido por <b>QYUDEV.</b></a>
+    <small>Fontes Great Vibes, Cormorant Garamond e Jost (Google Fonts, SIL Open Font License) · Login e banco de dados com Google Firebase (Authentication e Cloud Firestore)</small>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="dados.js"></script>
+<script>
+{
+  const C = window.CHA || {};
+  const IC = window.ICONES;
+  const ADMINS = (C.ADMINS || []).map(e => String(e).trim().toLowerCase());
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  let auth, fs, db, authMod;
+  let itens = [], reservas = {}, editando = null;
+  let unsubs = [];
+
+  const toast = (msg, bad) => {
+    const t = $('toast'); t.textContent = msg; t.className = 'on' + (bad ? ' bad' : '');
+    clearTimeout(toast.t); toast.t = setTimeout(() => { t.className = ''; }, 3200);
+  };
+  const falha = e => {
+    console.warn(e);
+    toast(e && e.code === 'permission-denied'
+      ? 'Sem permissão. Confira se o seu e-mail está em firestore.rules.'
+      : 'Não deu certo. Verifique a internet e tente de novo.', true);
+  };
+
+  const mostrar = qual => {
+    ['semConfig', 'entrar', 'semAcesso', 'painel'].forEach(id => { $(id).hidden = id !== qual; });
+  };
+
+  // ----- nomes amigáveis dos desenhos -----
+  const nomeIc = {};
+  window.ITENS_PADRAO.forEach(i => { if (!nomeIc[i.ic]) nomeIc[i.ic] = i.nome; });
+  nomeIc.presente = 'Presente (desenho genérico)';
+  $('fIc').innerHTML = Object.keys(IC)
+    .sort((a, b) => (a === 'presente' ? -1 : b === 'presente' ? 1 : nomeIc[a].localeCompare(nomeIc[b], 'pt')))
+    .map(k => `<option value="${k}">${esc(nomeIc[k] || k)}</option>`).join('');
+  const prev = () => { $('prev').innerHTML = IC[$('fIc').value] || IC.presente; };
+  $('fIc').addEventListener('change', prev);
+
+  // ----- lista -----
+  const slug = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 22) || 'item';
+
+  const render = () => {
+    const doBanco = itens.length > 0;
+    $('importar').hidden = doBanco;
+    $('btnNovo').hidden = !doBanco;
+    const lista = doBanco ? itens : [];
+    const ocupados = lista.filter(i => i.ganhou || reservas[i.id]).length;
+    $('stats').innerHTML = doBanco
+      ? `<b>${lista.length}</b> presentes · <b>${ocupados}</b> garantidos · <b>${lista.length - ocupados}</b> livres`
+      : 'Lista ainda não importada';
+    const cats = [...new Set(lista.map(i => i.cat))];
+    $('cats').innerHTML = cats.map(c => `<option value="${esc(c)}">`).join('');
+    $('lista').innerHTML = cats.map(c => `<h2>${esc(c)}</h2>` + lista.filter(i => i.cat === c).map(i => {
+      const r = reservas[i.id];
+      const st = i.ganhou ? '<span class="st">✓ Já temos</span>'
+        : r ? `<span class="st res">🎁 Reservado por ${esc(r.nome || 'alguém')}</span>`
+        : '<span class="st livre">Livre</span>';
+      return `<article class="item" data-id="${esc(i.id)}">
+        <div class="ill"><svg viewBox="0 0 64 64" aria-hidden="true">${IC[i.ic] || IC.presente}</svg></div>
+        <div><p class="nm">${esc(i.nome)}</p>${st}</div>
+        <div class="acts">
+          <button class="btn ghost sm" data-a="ganhou" type="button">${i.ganhou ? 'Desmarcar "Já temos"' : 'Já temos'}</button>
+          ${r ? '<button class="btn ghost sm" data-a="liberar" type="button">Liberar</button>' : ''}
+          <button class="btn ghost sm" data-a="editar" type="button">Editar</button>
+          <button class="btn warn sm" data-a="remover" type="button">Remover</button>
+        </div>
+      </article>`;
+    }).join('')).join('');
+  };
+
+  $('lista').addEventListener('click', async e => {
+    const b = e.target.closest('button[data-a]'); if (!b) return;
+    const id = b.closest('.item').dataset.id;
+    const it = itens.find(i => i.id === id); if (!it) return;
+    b.disabled = true;
+    try {
+      if (b.dataset.a === 'ganhou') {
+        await fs.updateDoc(fs.doc(db, 'itens', id), { ganhou: !it.ganhou });
+      } else if (b.dataset.a === 'liberar') {
+        await fs.deleteDoc(fs.doc(db, 'reservas', id));
+        toast('Pronto, o presente está livre de novo.');
+      } else if (b.dataset.a === 'remover') {
+        if (!confirm(`Remover "${it.nome}" da lista?`)) { b.disabled = false; return; }
+        await fs.deleteDoc(fs.doc(db, 'itens', id));
+        if (reservas[id]) await fs.deleteDoc(fs.doc(db, 'reservas', id));
+        toast('Removido.');
+      } else if (b.dataset.a === 'editar') {
+        abrir(it);
+      }
+    } catch (e2) { falha(e2); }
+    b.disabled = false;
+  });
+
+  // ----- janela de editar / novo -----
+  const dlg = $('dlg');
+  const abrir = it => {
+    editando = it || null;
+    $('dlgTitle').textContent = it ? 'Editar presente' : 'Novo presente';
+    $('fNome').value = it ? it.nome : '';
+    $('fCat').value = it ? it.cat : '';
+    $('fIc').value = it && IC[it.ic] ? it.ic : 'presente';
+    $('dlgErr').textContent = ''; $('dlgOk').disabled = false;
+    prev(); dlg.showModal(); $('fNome').focus();
+  };
+  $('btnNovo').addEventListener('click', () => abrir(null));
+  $('dlgCancel').addEventListener('click', () => dlg.close());
+
+  $('dlgForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const nome = $('fNome').value.trim(), cat = $('fCat').value.trim(), ic = $('fIc').value;
+    if (!nome || !cat) { $('dlgErr').textContent = 'Preencha o nome e a categoria.'; return; }
+    $('dlgOk').disabled = true;
+    try {
+      if (editando) {
+        await fs.updateDoc(fs.doc(db, 'itens', editando.id), { nome, cat, ic });
+      } else {
+        let id = slug(nome) + '-' + Math.random().toString(36).slice(2, 5);
+        const ordem = itens.reduce((m, i) => Math.max(m, i.ordem ?? 0), 0) + 1;
+        await fs.setDoc(fs.doc(db, 'itens', id), { nome, cat, ic, ganhou: false, ordem });
+      }
+      dlg.close(); toast('Salvo!');
+    } catch (e2) { $('dlgOk').disabled = false; falha(e2); }
+  });
+
+  // ----- importar a lista inicial -----
+  $('btnImportar').addEventListener('click', async () => {
+    $('btnImportar').disabled = true;
+    try {
+      const batch = fs.writeBatch(db);
+      window.ITENS_PADRAO.forEach((i, n) => {
+        const { id, ...resto } = i;
+        batch.set(fs.doc(db, 'itens', id), { ganhou: false, ...resto, ordem: n + 1 });
+      });
+      await batch.commit();
+      toast('Lista importada! Agora é só editar.');
+    } catch (e2) { falha(e2); }
+    $('btnImportar').disabled = false;
+  });
+
+  // ----- entrar / sair -----
+  const parar = () => { unsubs.forEach(u => u()); unsubs = []; itens = []; reservas = {}; };
+
+  const aoMudarUsuario = user => {
+    parar();
+    if (!user) { mostrar('entrar'); return; }
+    const email = (user.email || '').toLowerCase();
+    if (!ADMINS.includes(email)) { $('emailNegado').textContent = user.email || ''; mostrar('semAcesso'); return; }
+    mostrar('painel');
+    unsubs.push(fs.onSnapshot(fs.collection(db, 'reservas'), snap => {
+      reservas = {}; snap.forEach(d => { reservas[d.id] = d.data(); }); render();
+    }, falha));
+    unsubs.push(fs.onSnapshot(fs.collection(db, 'itens'), snap => {
+      itens = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => (a.ordem ?? 9999) - (b.ordem ?? 9999));
+      render();
+    }, falha));
+  };
+
+  $('btnEntrar').addEventListener('click', async () => {
+    $('erroLogin').textContent = '';
+    const prov = new authMod.GoogleAuthProvider();
+    try { await authMod.signInWithPopup(auth, prov); }
+    catch (e) {
+      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) {
+        try { await authMod.signInWithRedirect(auth, prov); return; } catch (e2) { e = e2; }
+      }
+      if (e && e.code === 'auth/popup-closed-by-user') return;
+      $('erroLogin').textContent = (e && e.code === 'auth/unauthorized-domain')
+        ? 'Este endereço ainda não foi autorizado no Firebase (Authentication > Configurações > Domínios autorizados).'
+        : 'Não deu para entrar agora. Tente de novo.';
+      console.warn(e);
+    }
+  });
+  const sair = () => authMod.signOut(auth);
+  $('btnSair').addEventListener('click', sair);
+  $('btnSair2').addEventListener('click', sair);
+
+  const iniciar = async () => {
+    if (!C.FIREBASE_CONFIG) { mostrar('semConfig'); return; }
+    try {
+      const V = '10.12.2', base = `https://www.gstatic.com/firebasejs/${V}/`;
+      const appMod = await import(base + 'firebase-app.js');
+      authMod = await import(base + 'firebase-auth.js');
+      fs = await import(base + 'firebase-firestore.js');
+      const app = appMod.initializeApp(C.FIREBASE_CONFIG);
+      auth = authMod.getAuth(app); db = fs.getFirestore(app);
+      mostrar('entrar');
+      authMod.onAuthStateChanged(auth, aoMudarUsuario);
+    } catch (e) {
+      console.warn(e);
+      $('erroLogin').textContent = 'Não consegui carregar o Firebase. Verifique a internet.';
+      mostrar('entrar');
+    }
+  };
+  iniciar();
+}
+</script>
+</body>
+</html>

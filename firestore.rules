@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Quem pode editar a lista (area da noiva). TROQUE pelos Gmails reais da Duda e seu.
+    // Use letras minusculas.
+    function admin() {
+      return request.auth != null
+          && request.auth.token.email_verified == true
+          && request.auth.token.email in [
+               'eduardabarbosaas@gmail.com',
+               'ramesonjaco@gmail.com'
+             ];
+    }
+
+    // Reservas: qualquer um le; qualquer um cria UMA vez por item (nao da para sobrescrever);
+    // so a noiva libera (apaga) uma reserva.
+    match /reservas/{item} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['nome', 'quando'])
+                    && request.resource.data.nome is string
+                    && request.resource.data.nome.size() > 0
+                    && request.resource.data.nome.size() <= 60
+                    && item.size() <= 30;
+      allow update: if false;
+      allow delete: if admin();
+    }
+
+    // Lista de presentes: qualquer um le; so a noiva cria, edita e remove.
+    match /itens/{item} {
+      allow read: if true;
+      allow write: if admin();
+    }
+  }
+}
